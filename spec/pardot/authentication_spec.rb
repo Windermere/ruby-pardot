@@ -18,6 +18,10 @@ describe Pardot::Authentication do
     def authenticate
       @client.authenticate
     end
+
+    def verifyBody
+      FakeWeb.last_request.body.should == 'email=user%40test.com&password=foo&user_key=bar'
+    end
     
     it "should return the api key" do
       authenticate.should == "my_api_key"
@@ -26,16 +30,19 @@ describe Pardot::Authentication do
     it "should set the api key" do
       authenticate
       @client.api_key.should == "my_api_key"
+      verifyBody
     end
     
     it "should make authenticated? true" do
       authenticate
       @client.authenticated?.should == true
+      verifyBody
     end
 
     it "should use version 3" do
       authenticate
       @client.version.to_i.should == 3
+      verifyBody
     end
     
   end
@@ -52,6 +59,10 @@ describe Pardot::Authentication do
     def authenticate
       @client.authenticate
     end
+
+    def verifyBody
+      FakeWeb.last_request.body.should == 'email=user%40test.com&password=foo&user_key=bar'
+    end
     
     it "should return the api key" do
       authenticate.should == "my_api_key"
@@ -60,16 +71,19 @@ describe Pardot::Authentication do
     it "should set the api key" do
       authenticate
       @client.api_key.should == "my_api_key"
+      verifyBody
     end
     
     it "should make authenticated? true" do
       authenticate
       @client.authenticated?.should == true
+      verifyBody
     end
 
     it "should use version 4" do
       authenticate
       @client.version.to_i.should == 4
+      verifyBody
     end
     
   end
